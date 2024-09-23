@@ -3,6 +3,7 @@ package fp.dam.psp.unidad2.ejemplos.ejemplo1.v1;
 public class UnHilo extends Thread {
 
     public UnHilo() {
+        super();
     }
 
     public UnHilo(String name) {
@@ -19,14 +20,15 @@ public class UnHilo extends Thread {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {}
-            System.out.println(Thread.currentThread().getName() + ", mensaje " + i);
+            System.out.println(getName() + ", mensaje " + i);
         }
     }
 
     public static void main(String[] args) {
-        Thread t = new UnHilo("pepe");
-        t.start();
-        t.run();
+        Thread t1 = new UnHilo("pepe");
+        Thread t2 = new UnHilo("pepín");
+        t1.start();
+        t2.start();
     }
 
 }

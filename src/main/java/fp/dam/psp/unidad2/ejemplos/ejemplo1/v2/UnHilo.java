@@ -3,6 +3,7 @@ package fp.dam.psp.unidad2.ejemplos.ejemplo1.v2;
 public class UnHilo extends Thread {
 
     public UnHilo() {
+        super();
     }
 
     public UnHilo(String name) {

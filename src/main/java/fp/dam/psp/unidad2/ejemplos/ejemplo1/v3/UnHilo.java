@@ -15,7 +15,6 @@ public class UnHilo extends Thread {
             }
         };
         t.start();
-        t.run();
     }
 
 }
