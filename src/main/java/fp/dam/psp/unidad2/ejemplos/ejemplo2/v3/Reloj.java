@@ -1,4 +1,4 @@
-package fp.dam.psp.unidad2.ejemplos.ejemplo2.v2;
+package fp.dam.psp.unidad2.ejemplos.ejemplo2.v3;
 
 import javax.swing.*;
 import java.time.LocalDateTime;
@@ -24,9 +24,24 @@ public class Reloj extends JFrame {
         setLocationRelativeTo(null);
     }
 
+    public void actualizarReloj() {
+        Runnable actualizarHora = new Runnable() {
+            public void run() {
+                hora.setText(formatter.format(LocalDateTime.now()));
+            }
+        };
+        while (true) {
+            SwingUtilities.invokeLater(actualizarHora);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+            }
+        }
+    }
+
     private void iniciar() {
         setVisible(true);
-        new Thread(new Tarea(hora), "segundero").start();
+        new Thread(this::actualizarReloj, "segundero").start();
     }
 
     public static void main(String[] args) {
