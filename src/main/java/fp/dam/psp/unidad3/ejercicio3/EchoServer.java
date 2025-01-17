@@ -15,6 +15,7 @@ public class EchoServer {
         while (true) {
             Socket socket = serverSocket.accept();
             // crear un hilo pasándole el socket que atienda la petición
+            socket.setSoTimeout(5000);
             executorService.submit(new RequestTask(socket));
         }
 

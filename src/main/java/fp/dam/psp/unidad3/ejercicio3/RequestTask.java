@@ -2,6 +2,7 @@ package fp.dam.psp.unidad3.ejercicio3;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.EOFException;
 import java.net.Socket;
 import java.time.LocalDateTime;
 
@@ -17,16 +18,22 @@ public class RequestTask implements Runnable {
     public void run() {
         try (socket) {
 
-            String s = new DataInputStream(socket.getInputStream()).readUTF();
-            System.out.println("Petición : " + s + " : " +
+            System.out.println("Petición : " +
                     socket.getInetAddress() + " : " + socket.getPort() +
                     " : " + LocalDateTime.now());
-            new DataOutputStream(socket.getOutputStream()).writeUTF(s);
-            System.out.println("respuesta : " + s + " : " +
-                    socket.getLocalAddress() + " : " + socket.getLocalPort() +
-                    " : " + LocalDateTime.now());
-        } catch (Exception e) {
 
+            DataInputStream in = new DataInputStream(socket.getInputStream());
+            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+            try {
+                for (; ; )
+                    out.writeUTF(in.readUTF());
+            } catch (EOFException e) {
+                System.out.println("respuesta finalizada : " +
+                        socket.getLocalAddress() + " : " + socket.getLocalPort() +
+                        " : " + LocalDateTime.now());
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getLocalizedMessage());
         }
     }
 }
