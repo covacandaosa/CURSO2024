@@ -24,7 +24,7 @@ public class RequestTask implements Runnable {
             System.out.printf("Petición : %s:%d : %s\n", clientIP, clientPort, LocalDateTime.now());
             DataInputStream in = new DataInputStream(socket.getInputStream());
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-            for (; ;)
+            for (;;)
                 out.writeUTF(in.readUTF());
         } catch (EOFException e) {
             System.out.printf("Respuesta : %s:%d : %s\n", clientIP, clientPort, LocalDateTime.now());
